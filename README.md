@@ -1,8 +1,6 @@
-# CityMall_Assignment_Disaster_Response
+# Disaster Response Coordination Platform
 
-A comprehensive real-time disaster management system built with the MERN stack, featuring AI-powered location extraction, social media monitoring, and geospatial resource mapping to coordinate emergency relief efforts effectively.
-
-![Platform Overview](https://img.shields.io/badge/Status-Completed-green) ![License](https://img.shields.io/badge/License-MIT-blue) ![Node.js](https://img.shields.io/badge/Node.js-18+-green) ![React](https://img.shields.io/badge/React-18+-blue)
+A robust real-time disaster management platform built with the MERN stack, integrating AI-powered location extraction, live social media monitoring, and geospatial resource mapping to streamline and coordinate emergency response operations with greater speed and precision.
 
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/54f4a541-2cfb-48cd-907f-5e39ac4c9e27" />
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/c6d0612b-9fba-4a30-a73b-3ea012feb251" />
@@ -11,24 +9,6 @@ A comprehensive real-time disaster management system built with the MERN stack, 
 <img width="1462" alt="image" src="https://github.com/user-attachments/assets/d7be9e40-c591-483a-a823-a18ef5eb7f0a" />
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/b88d9404-3a5a-4fd3-8c69-2dee66c4761a" />
 <img width="1469" alt="image" src="https://github.com/user-attachments/assets/d1220beb-f0fe-4cd9-996f-012e2a31a38f" />
-
-
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#-architecture)
-- [Installation](#-installation)
-- [Configuration](#-configuration)
-- [API Documentation](#-api-documentation)
-- [Database Schema](#-database-schema)
-- [Usage](#-usage)
-- [Real-time Features](#-real-time-features)
-- [External Integrations](#-external-integrations)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
-- [License](#-license)
 
 ## ✨ Features
 
@@ -419,6 +399,3 @@ curl -X POST http://localhost:5000/api/disasters \
 - Update documentation for API changes
 - Use conventional commit messages
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
