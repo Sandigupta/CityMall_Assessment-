@@ -54,7 +54,7 @@ app.use(cors({
     if (allowedOrigins.some(allowed => origin.includes(allowed.replace('https://', '')) || origin === allowed)) {
       return callback(null, true);
     }
-    logger.warn(CORS blocked origin: ${origin});
+    logger.warn(`CORS blocked origin: ${origin}`);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
@@ -63,12 +63,12 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
-  logger.info(${req.method} ${req.path} - ${req.ip});
+  logger.info(`${req.method} ${req.path} - ${req.ip}`);
   next();
 });
 
 app.use((req, res, next) => {
-  if (req.method === 'GET'  req.method === 'HEAD'  req.method === 'OPTIONS') {
+  if (req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS') {
     return readLimiter(req, res, next);
   }
   return generalLimiter(req, res, next);
@@ -120,7 +120,7 @@ app.use((err, req, res, next) => {
 app.use('*', (req, res) => {
   res.status(404).json({ 
     error: 'Route not found',
-    message: The endpoint ${req.method} ${req.originalUrl} does not exist,
+    message: `The endpoint ${req.method} ${req.originalUrl} does not exist`,
     availableEndpoints: ['/health', '/api']
   });
 });
@@ -128,13 +128,13 @@ app.use('*', (req, res) => {
 const PORT = process.env.PORT || 5001;
 
 server.listen(PORT, '0.0.0.0', () => {
-  logger.info(🚀 Server running on port ${PORT});
-  logger.info(📡 Environment: ${process.env.NODE_ENV});
-  logger.info(🔗 WebSocket server ready);
+  logger.info(`🚀 Server running on port ${PORT}`);
+  logger.info(`📡 Environment: ${process.env.NODE_ENV}`);
+  logger.info(`🔗 WebSocket server ready`);
   
   if (process.env.NODE_ENV === 'development') {
-    logger.info(🌐 Local server: http://localhost:${PORT});
-    logger.info(💊 Health check: http://localhost:${PORT}/health);
+    logger.info(`🌐 Local server: http://localhost:${PORT}`);
+    logger.info(`💊 Health check: http://localhost:${PORT}/health`);
   }
 });
 
@@ -156,102 +156,3 @@ process.on('uncaughtException', (error) => {
 });
 
 module.exports = { app, server, io };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const express = require('express')
-// const cors = require('cors')
-// const helmet = require('helmet')
-// const http = require('http')
-// const socketIo = require('socket.io')
-// require('dotenv').config()
-
-// const routes = require('./routes')
-// const { initializeSocket } = require('./services/websocket')
-// const logger = require('./utils/logger')
-// const { readLimiter, generalLimiter } = require('./middleware/rateLimiter')
-
-// const app = express()
-// const server = http.createServer(app)
-// const io = socketIo(server, {
-//   cors: {
-//     origin: process.env.NODE_ENV === 'production'
-//       ? 'https://your-frontend-url.vercel.app'
-//       : 'http://localhost:3000',
-//     methods: ['GET', 'POST']
-//   }
-// })
-
-// app.use(helmet())
-// app.use(cors({
-//   origin: process.env.NODE_ENV === 'production'
-//     ? 'https://your-frontend-url.vercel.app'
-//     : 'http://localhost:3000',
-//   credentials: true
-// }))
-
-// app.use((req, res, next) => {
-//   if (req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS') {
-//     return readLimiter(req, res, next)
-//   }
-//   return generalLimiter(req, res, next)
-// })
-
-// app.use(express.json({ limit: '10mb' }))
-// app.use(express.urlencoded({ extended: true }))
-
-// initializeSocket(io)
-
-// app.use((req, res, next) => {
-//   req.io = io
-//   next()
-// })
-
-// app.use('/api', routes)
-
-// app.get('/health', (req, res) => {
-//   res.json({ status: 'OK', timestamp: new Date().toISOString() })
-// })
-
-// app.use((err, req, res, next) => {
-//   logger.error('Unhandled error:', err)
-//   res.status(500).json({ error: 'Internal server error' })
-// })
-
-// app.use('*', (req, res) => {
-//   res.status(404).json({ error: 'Route not found' })
-// })
-
-// const PORT = process.env.PORT || 5001
-// server.listen(PORT, () => {
-//   logger.info(`Server running on port ${PORT}`)
-// })
-
-// module.exports = { app, server, io }
