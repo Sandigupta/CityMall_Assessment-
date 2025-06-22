@@ -16,17 +16,22 @@ app.set('trust proxy', 1);
 
 const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [
+      'https://city-mall-assessment.vercel.app',
       'https://disaster-response-platform.vercel.app',
-      'https://your-vercel-app.vercel.app',
       ...(process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : [])
     ]
-  : ['http://localhost:3000', 'http://localhost:3001'];
+  : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'];
 
 const io = socketIo(server, {
   cors: {
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
-      if (allowedOrigins.some(allowed => origin.includes(allowed.replace('https://', '')) || origin === allowed)) {
+      
+      const isAllowed = allowedOrigins.some(allowed => {
+        return origin === allowed || origin.endsWith('.vercel.app');
+      });
+      
+      if (isAllowed) {
         return callback(null, true);
       }
       callback(new Error('Not allowed by CORS'));
@@ -51,9 +56,15 @@ app.use(helmet({
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    if (allowedOrigins.some(allowed => origin.includes(allowed.replace('https://', '')) || origin === allowed)) {
+    
+    const isAllowed = allowedOrigins.some(allowed => {
+      return origin === allowed || origin.endsWith('.vercel.app');
+    });
+    
+    if (isAllowed) {
       return callback(null, true);
     }
+    
     logger.warn(`CORS blocked origin: ${origin}`);
     callback(new Error('Not allowed by CORS'));
   },
